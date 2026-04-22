@@ -131,36 +131,24 @@
 import NotPaid from "@/compontnsts/NotPaid";
 import axios from "axios";
 
-async function getData() {
-  const res = await fetch(
-    "https://inventory-manage-three.vercel.app/api/devices/retail",
-    { cache: "no-store" }
-  );
-  return res.json();
-}
-
-export default async function Retail({ searchParams }) {
-  const { search = "" } = await searchParams;
-
-  const kanaphuliassignIds = (
-    await axios.get(process.env.RETAIL_ASSIGN_ID, {
+export default async function Retail() {
+  const [kanaphuliRes, tiktikiRes, data] = await Promise.all([
+    axios.get(process.env.RETAIL_ASSIGN_ID, {
       headers: {
         Authorization: "BEARER ####cp-!!!!$$sultantracker.com###",
       },
-    })
-  ).data;
-
-  const tiktikiAssingIDs = (
-    await axios.get(process.env.TIKTIKI_ASSING_ID, {
+    }),
+    axios.get(process.env.TIKTIKI_ASSING_ID, {
       headers: {
         Authorization: "BEARER ####cp-!!!!$$sultantracker.com###",
       },
-    })
-  ).data;
+    }),
+    fetch("https://inventory-manage-three.vercel.app/api/devices/retail", {
+      cache: "no-store",
+    }).then((res) => res.json()),
+  ]);
 
-  const assignSet = new Set([...kanaphuliassignIds, ...tiktikiAssingIDs]);
-
-  const data = await getData();
+  const assignSet = new Set([...kanaphuliRes.data, ...tiktikiRes.data]);
 
   return <NotPaid devices={data} assignIds={assignSet} />;
 }
