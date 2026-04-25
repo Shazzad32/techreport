@@ -111,13 +111,11 @@ export default function Dashboard() {
             ☰
           </button>
 
-          <h1 className="font-semibold text-lg">welcome to sultan tracker</h1>
-
-          <div className="text-sm text-gray-500">Dashboard</div>
+          <h1 className="font-semibold text-lg">Dashboard</h1>
         </div>
 
-        <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
-          Select an option from the sidebar
+        <div className="flex-1 flex items-center justify-center bg-gray-600 text-white text-sm">
+          welcome to sultan tracker
         </div>
       </div>
     </div>
